@@ -25,6 +25,11 @@ import { ParentCheckInFormPage } from "@/pages/parent/ParentCheckInFormPage";
 import { ParentAIPage } from "@/pages/parent/ParentAIPage";
 import { ParentLegacyPage } from "@/pages/parent/ParentLegacyPage";
 import { ParentHealthPage } from "@/pages/parent/ParentHealthPage";
+import { PrivacyPolicyPage } from "@/pages/legal/PrivacyPolicyPage";
+import { TermsPage } from "@/pages/legal/TermsPage";
+import { MedicalDisclaimerPage } from "@/pages/legal/MedicalDisclaimerPage";
+import { AIDataProcessingPage } from "@/pages/legal/AIDataProcessingPage";
+import { CookiePolicyPage } from "@/pages/legal/CookiePolicyPage";
 
 function RequireOffspring({ children }: { children: React.ReactNode }) {
   const { mode } = useAuthStore();
@@ -93,6 +98,13 @@ export default function App() {
       />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+
+      {/* Public Legal & Privacy Pages */}
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/medical-disclaimer" element={<MedicalDisclaimerPage />} />
+      <Route path="/ai-data-processing" element={<AIDataProcessingPage />} />
+      <Route path="/cookie-policy" element={<CookiePolicyPage />} />
 
       <Route
         element={

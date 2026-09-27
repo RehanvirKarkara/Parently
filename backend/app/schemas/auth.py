@@ -10,6 +10,11 @@ class RegisterRequest(BaseModel):
     password: str = Field(min_length=6, max_length=128)
     first_name: str = Field(min_length=1, max_length=100)
     last_name: str = Field(min_length=1, max_length=100)
+    agree_terms: bool = True
+    agree_privacy: bool = True
+    agree_health_processing: bool = True
+    opt_in_marketing: bool = False
+    policy_version: str = "v1.0"
 
     @field_validator("password")
     @classmethod
@@ -81,6 +86,13 @@ class ParentRegisterRequest(BaseModel):
 
 class ParentActivateRequest(BaseModel):
     code: str = Field(min_length=6, max_length=6)
+    authorized_scopes: list[str] | None = Field(
+        default=None,
+        description="Scopes granted to family: checkins, medications, vitals, reports, ai_summaries",
+    )
+    agree_terms: bool = True
+    agree_privacy: bool = True
+    policy_version: str = "v1.0"
 
 
 class ParentActivateResult(BaseModel):

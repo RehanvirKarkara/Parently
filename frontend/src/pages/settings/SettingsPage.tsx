@@ -17,6 +17,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { ProfilePictureUpload } from "@/components/shared/ProfilePictureUpload";
 import { Logo } from "@/components/shared/Logo";
+import { PrivacyCenterSection } from "@/components/settings/PrivacyCenterSection";
 
 export function SettingsPage() {
   const user = useAuthStore((s) => s.user);
@@ -159,6 +160,9 @@ export function SettingsPage() {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Complete Privacy & Legal Management Center */}
+      <PrivacyCenterSection />
 
       <Card className="border-border/60 shadow-soft">
         <CardHeader>

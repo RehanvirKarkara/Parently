@@ -12,6 +12,7 @@ import { AIThinkingIndicator } from "@/components/shared/AIThinkingIndicator";
 import { ChatSkeleton } from "@/components/shared/RichSkeletons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import { MedicalDisclaimerBanner } from "@/components/shared/MedicalDisclaimerBanner";
 
 const suggestedPrompts = [
   "Why did Mom's energy feel off today?",
@@ -107,6 +108,11 @@ export function AIPage() {
             <ShieldAlert className="h-3.5 w-3.5" />
             Live data active
           </div>
+        </div>
+
+        {/* Clinical Disclaimer Banner */}
+        <div className="px-3 sm:px-4 pt-2">
+          <MedicalDisclaimerBanner compact dismissible />
         </div>
 
         {/* Scrollable Message List */}

@@ -39,6 +39,20 @@ from app.schemas.family import (
     SuccessResponse,
 )
 from app.schemas.health import CheckInCreate, MedicineCreate, MedicineUpdate
+from app.schemas.privacy import (
+    ConsentItemOut,
+    ConsentStatusResponse,
+    DataExportResponse,
+    DeleteAccountRequest,
+    DeleteDataRequest,
+    GrantConsentRequest,
+    ParentAuthorizationOut,
+    PoliciesResponse,
+    PolicyVersionOut,
+    ThirdPartyServiceOut,
+    UpdateParentAuthorizationRequest,
+    WithdrawConsentRequest,
+)
 from app.schemas.reports import ReportGenerate
 
 __all__ = [
@@ -49,8 +63,14 @@ __all__ = [
     "AuthResponse",
     "ChatReply",
     "CheckInCreate",
+    "ConsentItemOut",
+    "ConsentStatusResponse",
+    "DataExportResponse",
+    "DeleteAccountRequest",
+    "DeleteDataRequest",
     "FamilyMemberOut",
     "FamilyOut",
+    "GrantConsentRequest",
     "HealthLogOut",
     "LegacyAnswerCreate",
     "LegacyAnswerOut",
@@ -64,12 +84,15 @@ __all__ = [
     "OtpVerifyRequest",
     "ParentActivateRequest",
     "ParentActivateResult",
+    "ParentAuthorizationOut",
     "ParentInviteRequest",
     "ParentInviteResult",
     "ParentOut",
     "ParentRegisterRequest",
     "PasswordResetConfirm",
     "PasswordResetRequest",
+    "PoliciesResponse",
+    "PolicyVersionOut",
     "QuizAnswerCreate",
     "QuizAnswerOut",
     "QuizQuestionOut",
@@ -80,6 +103,10 @@ __all__ = [
     "SiblingInviteOut",
     "SiblingInviteRequest",
     "SuccessResponse",
+    "ThirdPartyServiceOut",
     "TokenPair",
+    "UpdateParentAuthorizationRequest",
     "UserOut",
+    "WithdrawConsentRequest",
 ]
+

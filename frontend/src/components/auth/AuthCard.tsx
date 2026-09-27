@@ -48,6 +48,13 @@ const registerSchema = (isParent: boolean) =>
       email: z.string().email("Enter a valid email address"),
       password: z.string().min(8, "Use at least 8 characters"),
       confirm_password: z.string(),
+      agree_terms: z.boolean().refine((v) => v === true, {
+        message: "You must accept the Terms of Service to create an account",
+      }),
+      agree_privacy: z.boolean().refine((v) => v === true, {
+        message: "You must acknowledge the Privacy Policy to create an account",
+      }),
+      opt_in_marketing: z.boolean().optional(),
     })
     .refine((data) => data.password === data.confirm_password, {
       message: "Passwords don't match",
@@ -96,6 +103,9 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
       email: "",
       password: "",
       confirm_password: "",
+      agree_terms: false,
+      agree_privacy: false,
+      opt_in_marketing: false,
     },
   });
 
@@ -143,6 +153,10 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
         password: values.password,
         first_name: values.first_name,
         last_name: values.last_name,
+        agree_terms: values.agree_terms,
+        agree_privacy: values.agree_privacy,
+        agree_health_processing: true,
+        opt_in_marketing: values.opt_in_marketing ?? false,
       });
       setTokens(res.tokens.access_token, res.tokens.refresh_token);
       useAuthStore.setState({ user: res.user, mode: "offspring", status: "authenticated" });
@@ -554,6 +568,58 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
                         </p>
                       )}
                     </div>
+                  </div>
+
+                  {/* Privacy & Legal Consents */}
+                  <div className="space-y-2 pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
+                    <label className="flex items-start gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 rounded border-border/80 text-primary focus:ring-primary/30"
+                        {...registerForm.register("agree_terms")}
+                      />
+                      <span>
+                        I agree to the{" "}
+                        <Link to="/terms" target="_blank" className="font-semibold underline text-foreground hover:text-primary">
+                          Terms of Service
+                        </Link>{" "}
+                        and acknowledge the non-emergency care scope.
+                      </span>
+                    </label>
+                    {registerForm.formState.errors.agree_terms && (
+                      <p role="alert" className="text-[10px] font-medium text-destructive pl-5">
+                        {registerForm.formState.errors.agree_terms.message}
+                      </p>
+                    )}
+
+                    <label className="flex items-start gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 rounded border-border/80 text-primary focus:ring-primary/30"
+                        {...registerForm.register("agree_privacy")}
+                      />
+                      <span>
+                        I acknowledge the{" "}
+                        <Link to="/privacy-policy" target="_blank" className="font-semibold underline text-foreground hover:text-primary">
+                          Privacy Policy
+                        </Link>{" "}
+                        and consent to routine health data processing.
+                      </span>
+                    </label>
+                    {registerForm.formState.errors.agree_privacy && (
+                      <p role="alert" className="text-[10px] font-medium text-destructive pl-5">
+                        {registerForm.formState.errors.agree_privacy.message}
+                      </p>
+                    )}
+
+                    <label className="flex items-start gap-2 cursor-pointer select-none text-muted-foreground/80">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 rounded border-border/80 text-primary focus:ring-primary/30"
+                        {...registerForm.register("opt_in_marketing")}
+                      />
+                      <span>(Optional) Send me periodic caregiving guides and product tips.</span>
+                    </label>
                   </div>
 
                   <div className="pt-2">
@@ -997,6 +1063,47 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
                         {...registerForm.register("confirm_password")}
                       />
                     </div>
+                  </div>
+
+                  {/* Privacy & Legal Consents */}
+                  <div className="space-y-2 pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
+                    <label className="flex items-start gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 rounded border-border/80 text-primary focus:ring-primary/30"
+                        {...registerForm.register("agree_terms")}
+                      />
+                      <span>
+                        I agree to the{" "}
+                        <Link to="/terms" target="_blank" className="font-semibold underline text-foreground hover:text-primary">
+                          Terms of Service
+                        </Link>
+                      </span>
+                    </label>
+                    {registerForm.formState.errors.agree_terms && (
+                      <p role="alert" className="text-[10px] font-medium text-destructive pl-5">
+                        {registerForm.formState.errors.agree_terms.message}
+                      </p>
+                    )}
+
+                    <label className="flex items-start gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 rounded border-border/80 text-primary focus:ring-primary/30"
+                        {...registerForm.register("agree_privacy")}
+                      />
+                      <span>
+                        I acknowledge the{" "}
+                        <Link to="/privacy-policy" target="_blank" className="font-semibold underline text-foreground hover:text-primary">
+                          Privacy Policy
+                        </Link>
+                      </span>
+                    </label>
+                    {registerForm.formState.errors.agree_privacy && (
+                      <p role="alert" className="text-[10px] font-medium text-destructive pl-5">
+                        {registerForm.formState.errors.agree_privacy.message}
+                      </p>
+                    )}
                   </div>
 
                   <Button

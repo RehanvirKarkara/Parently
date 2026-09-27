@@ -13,7 +13,12 @@ interface AuthState {
   login: (email: string, password: string) => Promise<void>;
   register: (payload: authApi.RegisterPayload) => Promise<void>;
   registerParent: (payload: authApi.ParentRegisterPayload) => Promise<void>;
-  activateParentInvite: (code: string) => Promise<void>;
+  activateParentInvite: (
+    code: string,
+    scopes?: string[],
+    agreeTerms?: boolean,
+    agreePrivacy?: boolean
+  ) => Promise<void>;
   setParent: (parent: Parent | null) => void;
   setMode: (mode: AppMode) => void;
   updateUserAvatar: (avatarUrl: string | null) => void;
@@ -78,8 +83,8 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      async activateParentInvite(code) {
-        const res = await authApi.activateParentInvite(code);
+      async activateParentInvite(code, scopes, agreeTerms, agreePrivacy) {
+        const res = await authApi.activateParentInvite(code, scopes, agreeTerms, agreePrivacy);
         set((state) => ({
           parent: state.parent ? { ...state.parent, is_active: true } : state.parent,
           user: state.user ? { ...state.user, is_active: true } : state.user,

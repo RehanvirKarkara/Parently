@@ -20,6 +20,11 @@ export interface RegisterPayload {
   password: string;
   first_name: string;
   last_name: string;
+  agree_terms?: boolean;
+  agree_privacy?: boolean;
+  agree_health_processing?: boolean;
+  opt_in_marketing?: boolean;
+  policy_version?: string;
 }
 
 export interface LoginPayload {
@@ -221,7 +226,12 @@ export interface ParentActivateResult {
 }
 
 /** Verified-logged-in parent completes their invitation OTP and joins the family. */
-export async function activateParentInvite(code: string): Promise<ParentActivateResult> {
+export async function activateParentInvite(
+  code: string,
+  scopes?: string[],
+  agreeTerms: boolean = true,
+  agreePrivacy: boolean = true
+): Promise<ParentActivateResult> {
   if (USE_MOCK) {
     await mockDelay(500);
     const record = [...mockDb.otpStore.entries()].find(([, r]) => r.code === code && r.purpose === "parent_invite");
@@ -235,7 +245,15 @@ export async function activateParentInvite(code: string): Promise<ParentActivate
     mockDb.otpStore.delete(email);
     return { success: true };
   }
-  return apiRequest<ParentActivateResult>("/auth/parent/activate", { method: "POST", body: { code } });
+  return apiRequest<ParentActivateResult>("/auth/parent/activate", {
+    method: "POST",
+    body: {
+      code,
+      authorized_scopes: scopes ?? ["checkins", "medications", "vitals", "reports", "ai_summaries"],
+      agree_terms: agreeTerms,
+      agree_privacy: agreePrivacy,
+    },
+  });
 }
 
 export async function getMe(): Promise<User> {

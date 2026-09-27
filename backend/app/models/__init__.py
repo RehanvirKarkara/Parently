@@ -12,6 +12,12 @@ from app.models.medicine import Medicine
 from app.models.notification import Notification
 from app.models.otp_code import OTPCode
 from app.models.parent import Parent
+from app.models.privacy import (
+    ParentAuthorization,
+    PrivacyAuditLog,
+    PrivacyRequest,
+    UserConsent,
+)
 from app.models.report import Report
 from app.models.user import User
 
@@ -26,8 +32,12 @@ __all__ = [
     "Notification",
     "OTPCode",
     "Parent",
+    "ParentAuthorization",
+    "PrivacyAuditLog",
+    "PrivacyRequest",
     "QuizAnswer",
     "QuizQuestion",
     "Report",
     "User",
+    "UserConsent",
 ]

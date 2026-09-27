@@ -11,6 +11,7 @@ import { AIThinkingIndicator } from "@/components/shared/AIThinkingIndicator";
 import { ChatSkeleton } from "@/components/shared/RichSkeletons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import { MedicalDisclaimerBanner } from "@/components/shared/MedicalDisclaimerBanner";
 import type { ChatMessage } from "@/types";
 
 const suggestedPrompts = [
@@ -90,6 +91,11 @@ export function ParentAIPage() {
             <ShieldAlert className="h-3.5 w-3.5 text-secondary" />
             Private & secure
           </div>
+        </div>
+
+        {/* Clinical & AI Medical Disclaimer */}
+        <div className="px-3 sm:px-4 pt-2">
+          <MedicalDisclaimerBanner compact dismissible />
         </div>
 
         <ScrollArea ref={scrollRef} className="flex-1">

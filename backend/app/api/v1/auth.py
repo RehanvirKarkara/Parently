@@ -70,6 +70,18 @@ def register(payload: RegisterRequest, request: Request, db: Session = Depends(g
         access_token=create_access_token(user.id, kind="user"),
         refresh_token=create_refresh_token(user.id, kind="user"),
     )
+
+    # Record explicit user consents
+    from app.services import privacy as privacy_service
+    if payload.agree_terms:
+        privacy_service.grant_consent(db, user, "terms", payload.policy_version, request=request)
+    if payload.agree_privacy:
+        privacy_service.grant_consent(db, user, "privacy_policy", payload.policy_version, request=request)
+    if payload.agree_health_processing:
+        privacy_service.grant_consent(db, user, "health_data_processing", payload.policy_version, request=request)
+    if payload.opt_in_marketing:
+        privacy_service.grant_consent(db, user, "marketing", payload.policy_version, request=request)
+
     return AuthResponse(user=user, tokens=tokens, mode="offspring")
 
 
@@ -167,6 +179,23 @@ def activate_parent_invitation(
             message="Your invitation has been accepted. Your family can now see your check-ins.",
             category="system", dedup_key=f"invite_accepted:{parent.id}",
         )
+    # Record parent consents and explicit data sharing authorization
+    from app.services import privacy as privacy_service
+    scopes = payload.authorized_scopes or ["checkins", "medications", "vitals", "reports", "ai_summaries"]
+    privacy_service.update_parent_authorization(db, parent, parent.family_id, scopes, "active")
+    if payload.agree_terms:
+        privacy_service.grant_consent(db, parent, "terms", payload.policy_version, request=request)
+    if payload.agree_privacy:
+        privacy_service.grant_consent(db, parent, "privacy_policy", payload.policy_version, request=request)
+    privacy_service.grant_consent(
+        db,
+        parent,
+        "parent_data_sharing",
+        payload.policy_version,
+        request=request,
+        metadata_json={"scopes": scopes, "family_id": parent.family_id},
+    )
+
     return ParentActivateResult(success=True)
 
 
