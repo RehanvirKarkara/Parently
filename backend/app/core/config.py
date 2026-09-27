@@ -91,9 +91,10 @@ class Settings(BaseSettings):
     TWILIO_AUTH_TOKEN: str = ""
     TWILIO_PHONE_NUMBER: str = ""
 
-    # Push - FCM
+    # Push - FCM / Firebase Admin
     FCM_SERVER_KEY: str = ""
     FCM_SENDER_ID: str = ""
+    FIREBASE_CREDENTIALS_PATH: str = ""
 
     # Object storage - Cloudflare R2
     R2_ACCOUNT_ID: str = ""

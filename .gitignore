@@ -1,8 +1,11 @@
-# Environment files
+# Environment files & Secrets
 .env
 .env.*
 !.env.example
 *.env
+*firebase*.json
+*service-account*.json
+*serviceAccount*.json
 
 # Dependencies
 node_modules/
