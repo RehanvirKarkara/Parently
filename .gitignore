@@ -1,0 +1,82 @@
+# Environment files
+.env
+.env.*
+!.env.example
+*.env
+
+# Dependencies
+node_modules/
+**/node_modules/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv/
+backend/venv/
+backend/env/
+.venv/
+venv/
+env/
+build/
+dist/
+dist-ssr/
+*.egg-info/
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+celerybeat-schedule
+celerybeat-schedule.*
+
+# Testing & Cache
+coverage/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+**/.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# Databases & SQLite
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+backend/database/*.db
+backend/database/*.sqlite*
+
+# ChromaDB & Vector Store
+chroma_data/
+chroma/
+*.chroma/
+
+# Uploads & Media
+uploads/
+media/
+static/uploads/
+
+# Build artifacts & TypeScript
+.next/
+out/
+.parcel-cache/
+*.tsbuildinfo
+next-env.d.ts
+vite.config.ts.timestamp-*
