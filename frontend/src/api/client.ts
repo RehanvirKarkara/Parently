@@ -5,7 +5,7 @@
  * mock handlers resolve realistic data with simulated latency; when set to
  * "false" requests are sent to the real FastAPI backend at `VITE_API_URL`.
  */
-const BASE_URL: string = import.meta.env.VITE_API_URL ?? "/api/v1";
+const BASE_URL: string = (import.meta.env.VITE_API_URL ?? "/api/v1").replace(/\/+$/, "");
 export const USE_MOCK: boolean = import.meta.env.VITE_USE_MOCK !== "false";
 export const MOCK_LATENCY_MS = 350;
 

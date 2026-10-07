@@ -2,7 +2,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import model_validator
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -26,6 +26,13 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = f"sqlite:///{(BASE_DIR / 'database' / 'parently.db').as_posix()}"
     TEST_DATABASE_URL: str = "sqlite:///:memory:"
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def _normalize_database_url(cls, v: str) -> str:
+        if isinstance(v, str) and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql://", 1)
+        return v
 
     # JWT
     JWT_SECRET: str = "dev-secret-change-me"
